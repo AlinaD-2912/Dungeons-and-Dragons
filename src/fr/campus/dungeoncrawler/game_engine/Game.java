@@ -9,8 +9,15 @@ public class Game {
     }
 
     public void start() {
-        System.out.println("Game started!");
-//        board.movePlayer(); // example call
+        boolean hasWon = false;
+
+        while (!hasWon) {
+            System.out.println("Press Enter to roll the dice...");
+            new java.util.Scanner(System.in).nextLine(); // wait for user input
+            hasWon = board.movePlayer(); // check win after move
+        }
+
+        System.out.println("Game over, thanks for playing!");
     }
 
 }
