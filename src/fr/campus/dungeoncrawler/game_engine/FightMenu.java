@@ -7,12 +7,15 @@ public class FightMenu {
     private Enemy enemy;
     private Character player;
 
-    public FightMenu(Character player, Enemy enemy) {
-        this.player = player;
-        this.enemy = enemy;
+    public FightMenu() {
+
     }
 
-    public boolean startFight () {
+    public boolean startFight (Character player, Enemy enemy) {
+
+        this.player = player;
+        this.enemy = enemy;
+
         System.out.println("--- Fight Started! ---");
         System.out.println("Enemy: " + enemy.getType());
         System.out.println("Attack Level: " + enemy.getAttackLevel());

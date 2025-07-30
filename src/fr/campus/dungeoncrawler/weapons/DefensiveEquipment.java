@@ -1,6 +1,6 @@
 package fr.campus.dungeoncrawler.weapons;
 
-public class DefensiveEquipment {
+public abstract class DefensiveEquipment {
 
     private String type;
     private int defenceLevel;

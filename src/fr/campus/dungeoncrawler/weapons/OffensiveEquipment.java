@@ -1,6 +1,6 @@
 package fr.campus.dungeoncrawler.weapons;
 
-public class OffensiveEquipment {
+public abstract class OffensiveEquipment {
 
     private String type;
     private int attackLevel;
