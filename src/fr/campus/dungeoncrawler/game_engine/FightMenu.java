@@ -10,7 +10,7 @@ public class FightMenu {
 
         // Example simple logic for now:
         System.out.println("You fight bravely and defeat the " + enemy.getType() + "!");
-        // (You can later add attack/defense turns here)
+
     }
 
 }

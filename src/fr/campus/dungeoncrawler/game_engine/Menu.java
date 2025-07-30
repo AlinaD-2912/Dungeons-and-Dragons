@@ -43,7 +43,11 @@ public class Menu {
                 int sub = ScannerHelper.getInt("Your choice: ");
                 switch (sub) {
                     case 1 -> {
-                        System.out.println(player);
+//                        System.out.println(player);
+                        System.out.println("--- YOUR CHARACTER ---");
+                        System.out.println("Name: " + player.getName());
+                        System.out.println("Attack Level: " + player.getAttackLevel());
+                        System.out.println("Life Level: " + player.getLifeLevel());
                         if (player instanceof Wizard) {
                             System.out.println("""
                                      /|\\
@@ -55,8 +59,8 @@ public class Menu {
                         } else if (player instanceof Warrior) {
                             System.out.println("""
                                     ╭────╮
-                                    (งಠ_ಠ)ง──━一
-                                     /█\\\s
+                                    (งಠ_ಠ)ง
+                                     /█\\──━一
                                     _| |_
                                     WARRIOR
                                     """);
