@@ -3,23 +3,31 @@ import fr.campus.dungeoncrawler.characters.Character;
 import fr.campus.dungeoncrawler.enemies.Enemy;
 
 public class FightMenu {
-
+    /**
+     * Fight menu responsible for fight dialog and fight overall
+     * it returns true or false back to board in movePlayer() and stocks in boolean
+     * FightMenu takes -> player, enemy, make them fight and returns the result of the fight back to -> Board movePlayer()
+     */
     private Enemy enemy;
     private Character player;
-
-    public FightMenu() {
-
-    }
 
     public boolean startFight (Character player, Enemy enemy) {
 
         this.player = player;
         this.enemy = enemy;
 
-        System.out.println("--- Fight Started! ---");
+        System.out.println("-------- Fight Started! -----------");
+        System.out.println(" ");
+        System.out.println("-------- ENEMY -----------");
         System.out.println("Enemy: " + enemy.getType());
         System.out.println("Attack Level: " + enemy.getAttackLevel());
         System.out.println("Life Level: " + enemy.getLifeLevel());
+
+        System.out.println(" ");
+        System.out.println("-------- YOU -----------");
+        System.out.println("Attack Level: " + player.getAttackLevel());
+        System.out.println("Life Level: " + player.getLifeLevel());
+
 
         System.out.println("You strike first with power: " + player.getAttackLevel());
         enemy.setLifeLevel(enemy.getLifeLevel() - player.getAttackLevel());

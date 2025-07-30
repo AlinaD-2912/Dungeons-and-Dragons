@@ -7,22 +7,40 @@ import fr.campus.dungeoncrawler.game_engine.ScannerHelper;
 
 
 public class Menu {
+    /**
+     * Menu is used for main menu choices and submenu choices
+     * it cals ScannerHelper to read the player input and send the correct response to the program
+     * it creates a player with new name and random attack and life levels and sends it further to class Game
+     * it allows player to go back in his choice of character or quit the game
+     * Menu sends -> player to -> Game
+     * Menu creates -> player becomes -> reference to the new object Warrior or Wizard
+    */
 
-    // while choosing character in scanner give a choice to show info, modify info, quit game
     public void start() {
         Character player = null;
 
         while (true) {
+
+            /*
+            * Main menu
+            * it allows to create character or quit the game
+            * after character is created it disappears
+             */
+
             System.out.println("\n--- Main Menu ---");
             System.out.println("1. Create character");
             System.out.println("2. Quit");
 
             int choice = ScannerHelper.getInt("Choose: ");
+            // if choice is 2 stop the program
             if (choice == 2) break;
 
             String type = ScannerHelper.getString("Type (Wizard/Warrior): ");
             String name = ScannerHelper.getString("Name: ");
 
+            /*
+            * Checks if the user input the same as one of 2 options Wizard or Warrior
+             */
             if (type.equalsIgnoreCase("Wizard")) {
                 player = new Wizard(name);
             } else if (type.equalsIgnoreCase("Warrior")) {
@@ -32,6 +50,13 @@ public class Menu {
                 continue; // restart main loop
             }
 
+            /*
+             * Submenu
+             * appears after character created
+             * gives 4 options to player
+             * remembers the created player and sends information about it to Game
+             * starts the Game engine
+             */
             boolean inSubmenu = true;
             while (inSubmenu) {
                 System.out.println("\n--- Character Menu ---");
@@ -42,8 +67,8 @@ public class Menu {
 
                 int sub = ScannerHelper.getInt("Your choice: ");
                 switch (sub) {
+                    // allows to view full information about character
                     case 1 -> {
-//                        System.out.println(player);
                         System.out.println("--- YOUR CHARACTER ---");
                         System.out.println("Name: " + player.getName());
                         System.out.println("Attack Level: " + player.getAttackLevel());
@@ -67,14 +92,17 @@ public class Menu {
                         }
 
                     }
+                    // allows to modify character name
                     case 2 -> {
                         String newName = ScannerHelper.getString("New name: ");
                         player.setName(newName);
                     }
+                    //sends the created character to Game class and starts Game
                     case 3 -> {
                         Game game = new Game(player);
                         game.start();
                     }
+                    //sends player back to main menu
                     case 4 -> inSubmenu = false;
                     default -> System.out.println("Invalid option.");
                 }

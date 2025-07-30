@@ -3,11 +3,10 @@ import fr.campus.dungeoncrawler.characters.Character;
 import fr.campus.dungeoncrawler.game_engine.Menu;
 
 public class Main {
-//    public static void main(String[] args) {
-//        //game flow
-//        Character warrior = new Character("Warrior", "Thorin", 10, 5, "Axe");
-//        System.out.println(warrior);
-//    }
+    /**
+     * Main send a signal to menu to send the main menu with choices to the player
+     *
+     */
     public static void main(String[] args) {
         Menu menu = new Menu();
         menu.start();
