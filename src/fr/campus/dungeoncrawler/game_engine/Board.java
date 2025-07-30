@@ -13,6 +13,7 @@ public class Board {
     private int playerPosition = 0;
     private Dice dice;
     private Character player;
+    private FightMenu menu;
 
 
     private int[] enemyPosition = new int[5];
@@ -63,15 +64,27 @@ public class Board {
         }
 
         for (int i = 0; i < enemyPosition.length; i++) {
-            if (playerPosition == enemyPosition[i]) {
+            if (playerPosition == enemyPosition[i] && enemies[i] != null) {
                 System.out.println("You encountered a " + enemies[i].getType() + "!");
-                FightMenu menu = new FightMenu();
-                menu.startFight(player, enemies[i]);
-                // Call fight logic if needed
+                FightMenu menu = new FightMenu(player, enemies[i]);
+                boolean playerDead = menu.startFight();
+
+                // Remove enemy if dead
+                if (enemies[i].getLifeLevel() <= 0) {
+                    System.out.println("The " + enemies[i].getType() + " has been defeated and removed from the board.");
+                    enemies[i] = null;
+                    enemyPosition[i] = -1;
+                }
+
+                // End game if player died
+                if (playerDead) {
+                    System.out.println("Game Over.");
+                    return true;
+                }
             }
         }
 
-        return false;
-
+        return false; // Game continues
     }
+
 }
