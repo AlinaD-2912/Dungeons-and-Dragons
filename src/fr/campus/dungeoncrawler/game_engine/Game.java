@@ -1,11 +1,14 @@
 package fr.campus.dungeoncrawler.game_engine;
 
+import fr.campus.dungeoncrawler.characters.Character;
+
 public class Game {
 
     private Board board;
 
-    public Game() {
-        this.board = new Board();
+    public Game (Character player)
+    {
+        this.board = new Board(player);
     }
 
     public void start() {

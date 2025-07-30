@@ -68,7 +68,7 @@ public class Menu {
                         player.setName(newName);
                     }
                     case 3 -> {
-                        Game game = new Game();
+                        Game game = new Game(player);
                         game.start();
                     }
                     case 4 -> inSubmenu = false;
