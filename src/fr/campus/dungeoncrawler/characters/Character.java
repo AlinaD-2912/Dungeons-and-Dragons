@@ -8,6 +8,10 @@ public abstract class Character {
     private int attackLevel;
     private String weapon;
 
+    private final int baseAttack;
+    private final int baseLife;
+
+
     //Constructor
     public Character(String type, String name, int lifeLevel, int attackLevel, String weapon) {
         this.type = type;
@@ -15,7 +19,29 @@ public abstract class Character {
         this.lifeLevel = lifeLevel;
         this.attackLevel = attackLevel;
         this.weapon = weapon;
+
+        this.baseAttack = attackLevel;
+        this.baseLife = lifeLevel;
     }
+
+    // reset character after game over or player won
+    public void resetStats() {
+        this.attackLevel = baseAttack;
+        this.lifeLevel = baseLife;
+    }
+
+    //increase the life level after player picked the potion
+    public void increaseLifeLevel(int amount) {
+        this.lifeLevel += amount;
+        System.out.println("You gained " + amount + " life points! Current life: " + this.lifeLevel);
+    }
+
+
+    public void increaseAttackLevel(int amount) {
+        this.attackLevel += amount;
+        System.out.println("You gained " + amount + " attack points! Current attack level: " + this.attackLevel);
+    }
+
 
     //Getters
     public String getType() {
@@ -57,6 +83,10 @@ public abstract class Character {
 
     public void setWeapon(String weapon) {
         this.weapon = weapon;
+    }
+
+    public boolean isAlive() {
+        return lifeLevel > 0;
     }
 
     //ToString

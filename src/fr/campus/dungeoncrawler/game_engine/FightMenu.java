@@ -13,9 +13,12 @@ public class FightMenu {
 
     public boolean startFight (Character player, Enemy enemy) {
 
+        /**
+         * improve so the enemies fight to death and player has a choice to flee so he moves 2 points back
+         */
         this.player = player;
         this.enemy = enemy;
-
+        System.out.println(" ");
         System.out.println("-------- Fight Started! -----------");
         System.out.println(" ");
         System.out.println("-------- ENEMY -----------");
@@ -28,22 +31,22 @@ public class FightMenu {
         System.out.println("Attack Level: " + player.getAttackLevel());
         System.out.println("Life Level: " + player.getLifeLevel());
 
-
+        System.out.println(" ");
         System.out.println("You strike first with power: " + player.getAttackLevel());
         enemy.setLifeLevel(enemy.getLifeLevel() - player.getAttackLevel());
-
+        System.out.println(" ");
         if (enemy.getLifeLevel() <= 0) {
             System.out.println("You defeated the " + enemy.getType() + "!");
             return false;
         }
-
+        System.out.println(" ");
         System.out.println("The " + enemy.getType() + " hits back with power: " + enemy.getAttackLevel());
         player.setLifeLevel(player.getLifeLevel() - enemy.getAttackLevel());
-
+        System.out.println(" ");
         System.out.println("The " + enemy.getType() + " flees after the attack!");
-
+        System.out.println(" ");
         System.out.println("Your remaining health: " + player.getLifeLevel());
-
+        System.out.println(" ");
         if (player.getLifeLevel() <= 0) {
             System.out.println("You have been defeated...");
             return true; // Player is dead

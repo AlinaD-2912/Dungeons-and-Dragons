@@ -2,111 +2,195 @@ package fr.campus.dungeoncrawler.game_engine;
 
 import fr.campus.dungeoncrawler.characters.Character;
 import fr.campus.dungeoncrawler.enemies.*;
-import fr.campus.dungeoncrawler.exceptions.OutOfBoardException;
+//import fr.campus.dungeoncrawler.exceptions.OutOfBoardException;
+import fr.campus.dungeoncrawler.normal_tiles.EmptyTile;
+import fr.campus.dungeoncrawler.normal_tiles.EnemyTile;
+import fr.campus.dungeoncrawler.normal_tiles.SurpriseTile;
+import fr.campus.dungeoncrawler.surprise_tiles.Potion;
+import fr.campus.dungeoncrawler.surprise_tiles.Spell;
+import fr.campus.dungeoncrawler.surprise_tiles.Weapon;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Board {
     /**
      * Board is responsible for organising everything that happens on the board
-     * it determines the number of total cases
+     * it determines the number of total tiles
      * if player meats with enemy it sends player and enemy to class FightMenu to start the fight
-     *
+     *...
      * Manages players movements
      * Decides where to place enemies
      * Updates player position
-     * Creates and assigns case types
-     * Decides where to place cases
-     *
+     * Creates and assigns tile types
+     * Decides where to place surprise tiles
+     *...
      * Board sends -> enemy, player to -> class FightMenu and starts a fight
      * Board rolls -> dice from -> class Dice and sends result back to -> Board movePlayer()
      * Board creates -> enemies and places them on -> Board placeEnemies()
      */
+
     private final int BOARD_SIZE = 64;
-    private final Case[] board = new Case[BOARD_SIZE];
+    //Create an array that can hold 64 references to Tile objects
+    private final Tile[] board = new Tile[BOARD_SIZE];
     private int playerPosition = 0;
     private Dice dice;
     private Character player;
 
     public Board(Character player) {
+
         //Assigns the values to empty objects
         this.dice = new Dice();
         this.player = player;
 
         // Initialising board
+        //Creates actual instances of the subclasses and putting them into the array.
         for (int i = 0; i < BOARD_SIZE; i++) {
-            board[i] = new Case();
+            board[i] = new EmptyTile();
         }
+
         // Places enemies
         placeEnemies();
+        //Place surprise Tiles
+        placeSurpriseTiles();
+        printBoard();
     }
+
+    public void printBoard() {
+        System.out.println("\n=== BOARD OVERVIEW ===");
+        for (int i = 0; i < board.length; i++) {
+            Tile tile = board[i];
+            String display;
+
+            if (tile instanceof EmptyTile) {
+                display = "[   ]";
+            } else if (tile instanceof EnemyTile) {
+                display = "[ E ]";
+            } else if (tile instanceof Potion) {
+                display = "[ P ]";
+            } else if (tile instanceof Spell) {
+                display = "[ S ]";
+            } else if (tile instanceof Weapon) {
+                display = "[ W ]";
+            } else {
+                display = "[ ? ]"; // Unknown or undefined tile
+            }
+
+            System.out.print(display);
+
+            // Optional: Line break every 8 tiles (or any size you want)
+            if ((i + 1) % 8 == 0) {
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }
+
+
+    public Character getPlayer() {
+        return player;
+    }
+
+
 
     public void placeEnemies() {
         //determines how many enemies to create and place on board
         Enemy[] enemies = {
-                new Dragon(), new Goblin(), new Warlock(), new Warlock(), new Warlock()
+                new Dragon(), new Goblin(), new Warlock(), new Warlock(), new Dragon()
         };
 
         int placed = 0;
-        //place all the enemies present in te table
+
+        //place all the enemies present on the board
         while (placed < enemies.length) {
-            int position = ThreadLocalRandom.current().nextInt(0, BOARD_SIZE);
-            if (board[position].isEmpty() && position != 0) { // avoid player start
-                board[position].setEnemy(enemies[placed]);
+            int position = ThreadLocalRandom.current().nextInt(1, BOARD_SIZE); // avoid start at 0
+
+            //Checks whether the object stored at board[position] is an instance of the EmptyTile class
+            if (board[position] instanceof EmptyTile) {
+                board[position] = new EnemyTile(enemies[placed]); // Replace with new EnemyTile
                 placed++;
             }
         }
     }
 
-    public boolean movePlayer() {
-        //recover the result of dice
-        int steps = dice.roll();
 
+    public boolean movePlayer() {
+        int steps = dice.roll();
         System.out.println("You rolled: " + steps);
-        try {
-            updatePlayerPosition(steps);
-        } catch (OutOfBoardException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Game Over.");
-            return true;
+
+        boolean playerWon = updatePlayerPosition(steps);
+        if (playerWon) {
+            return true; // triggers game end in Game.start()
         }
+
+        // potion boost
+        if (board[playerPosition] instanceof Potion potion) {
+            System.out.println("You found a " + potion.toString() + " potion!");
+            player.increaseLifeLevel(potion.getLifeBoost());
+
+            // Optionally remove potion
+            board[playerPosition] = new EmptyTile();
+        }
+
+        // spell boost
+        if (board[playerPosition] instanceof Spell spell) {
+            System.out.println("You found a " + spell.toString() + " spell!");
+            player.increaseAttackLevel(spell.getAttackBoost());
+
+            // Optionally remove spell
+            board[playerPosition] = new EmptyTile();
+        }
+
+        // weapon boost
+        if (board[playerPosition] instanceof Weapon weapon) {
+            System.out.println("You found a " + weapon.toString() + " weapon!");
+            player.increaseAttackLevel(weapon.getAttackBoost());
+
+            // Optionally remove weapon
+            board[playerPosition] = new EmptyTile();
+        }
+
 
         System.out.println("Your new position: " + playerPosition);
-        //sends the current position of player on the board to the class Case
-        Case currentCase = board[playerPosition];
-        if (!currentCase.isEmpty()) {
-            Enemy enemy = currentCase.getEnemy();
-            System.out.println("You encountered a " + enemy.getType() + "!");
-
-            //sends the signal to class Fight menu to start the fight with the enemy
-            FightMenu menu = new FightMenu();
-
-            //boolean takes the result from class fightmenu to know if player died or survived during the fight
-            boolean playerDead = menu.startFight(player, enemy);
-
-            //if enemy dies
-            if (enemy.getLifeLevel() <= 0) {
-                System.out.println("The " + enemy.getType() + " has been defeated and removed from the board.");
-                currentCase.clear();
-            }
-            //if player dies
-            if (playerDead) {
-                System.out.println("Game Over.");
-                return true;
-            }
-        }
-
-        return false; // Game continues
+        //sends the current position of player on the board to the class Tile
+        Tile currentTile = board[playerPosition];
+        return currentTile.onTile(player);
     }
 
-    // Separates position logic and throws exception if out of board
 
-    private void updatePlayerPosition(int steps) throws OutOfBoardException {
+
+    public void placeSurpriseTiles() {
+        Tile[] surpriseTiles = {
+                new Potion(Potion.Type.BIG), new Potion(Potion.Type.SMALL), new Spell(Spell.Type.FIREBALL),
+                new Spell(Spell.Type.THUNDER), new Weapon(Weapon.Type.SWORD), new Weapon(Weapon.Type.MACE)
+        };
+
+        int placed = 0;
+
+        //place all the enemies present on the board
+        while (placed < surpriseTiles.length) {
+            int position = ThreadLocalRandom.current().nextInt(1, BOARD_SIZE); // skip start at 0
+
+            if (board[position] instanceof EmptyTile) {
+                board[position] = surpriseTiles[placed]; // No need for new SurpriseTile()
+                placed++;
+            }
+        }
+    }
+
+
+    // Separates position logic and throws exception if out of board
+    private boolean updatePlayerPosition(int steps)
+            //throws OutOfBoardException
+    {
         //updates the player position
         playerPosition += steps;
 
         if (playerPosition >= BOARD_SIZE) {
-            throw new OutOfBoardException("You moved beyond the last square!");
+            System.out.println("You moved beyond the last square!");
+            player.setLifeLevel(0); // Mark as dead → triggers Game Over menu
+            return true; // Player moved beyond the board — game ends
         }
+
+        return false;
     }
 }

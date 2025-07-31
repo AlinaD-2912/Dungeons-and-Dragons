@@ -40,7 +40,7 @@ public class Menu {
 
             /*
             * Checks if the user input the same as one of 2 options Wizard or Warrior
-             */
+            */
             if (type.equalsIgnoreCase("Wizard")) {
                 player = new Wizard(name);
             } else if (type.equalsIgnoreCase("Warrior")) {
@@ -100,7 +100,33 @@ public class Menu {
                     //sends the created character to Game class and starts Game
                     case 3 -> {
                         Game game = new Game(player);
-                        game.start();
+                        boolean playerSurvived = game.start();
+
+                        if (!playerSurvived) {
+                            boolean postGame = true;
+                            while (postGame) {
+                                System.out.println("\n--- Game Over Menu ---");
+                                System.out.println("1. Restart with same character (reset stats)");
+                                System.out.println("2. Change character");
+                                System.out.println("3. Quit");
+
+                                int postChoice = ScannerHelper.getInt("Your choice: ");
+                                switch (postChoice) {
+                                    case 1 -> {
+                                        player.resetStats(); // you'll define this
+                                        postGame = false;
+                                    }
+                                    case 2 -> {
+                                        player = null;
+                                        inSubmenu = false; // go back to main menu
+                                        postGame = false;
+                                    }
+                                    case 3 -> System.exit(0);
+                                    default -> System.out.println("Invalid option.");
+                                }
+                            }
+                        }
+
                     }
                     //sends player back to main menu
                     case 4 -> inSubmenu = false;
