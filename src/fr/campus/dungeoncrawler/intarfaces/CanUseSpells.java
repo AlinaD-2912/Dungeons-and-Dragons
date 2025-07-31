@@ -1,6 +1,8 @@
 package fr.campus.dungeoncrawler.intarfaces;
 import fr.campus.dungeoncrawler.characters.Character;
+import fr.campus.dungeoncrawler.surprise_tiles.Spell;
 
-public interface TargetCharacter {
-    boolean canAttack(Character character);
+public interface CanUseSpells {
+
+
 }

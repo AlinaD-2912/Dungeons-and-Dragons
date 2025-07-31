@@ -1,7 +1,10 @@
 package fr.campus.dungeoncrawler.characters;
+
+import fr.campus.dungeoncrawler.intarfaces.CanUseWeapons;
+
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Warrior extends Character {
+public class Warrior extends Character implements CanUseWeapons {
     public Warrior(String name) {
         super("Warrior",
                 name,

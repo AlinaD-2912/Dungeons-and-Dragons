@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class DataBase {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/dungeon_game";
-    private static final String DB_USER = "your_mysql_username";
-    private static final String DB_PASSWORD = "your_mysql_password";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/dungeons_and_dragons";
+    private static final String DB_USER = "user";
+    private static final String DB_PASSWORD = "password";
 
     private Connection connection;
 
@@ -21,7 +21,7 @@ public class DataBase {
 
     public void insertCharacter(String type, String name, int lifePoints, int strength,
                                 String offensiveEquipment, String defensiveEquipment) {
-        String query = "INSERT INTO character (type, name, lifePoints, strength, offensiveEquipment, defensiveEquipment) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO characters (type, name, lifePoints, strength, offensiveEquipment, defensiveEquipment) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, type);
@@ -42,7 +42,7 @@ public class DataBase {
         try {
             if (connection != null) {
                 connection.close();
-                System.out.println("🔌 Disconnected from database.");
+                System.out.println(" Disconnected from database.");
             }
         } catch (SQLException e) {
             System.err.println(" Failed to close connection: " + e.getMessage());

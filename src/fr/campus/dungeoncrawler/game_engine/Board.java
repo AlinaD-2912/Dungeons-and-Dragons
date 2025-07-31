@@ -3,6 +3,8 @@ package fr.campus.dungeoncrawler.game_engine;
 import fr.campus.dungeoncrawler.characters.Character;
 import fr.campus.dungeoncrawler.enemies.*;
 //import fr.campus.dungeoncrawler.exceptions.OutOfBoardException;
+import fr.campus.dungeoncrawler.intarfaces.CanUseSpells;
+import fr.campus.dungeoncrawler.intarfaces.CanUseWeapons;
 import fr.campus.dungeoncrawler.normal_tiles.EmptyTile;
 import fr.campus.dungeoncrawler.normal_tiles.EnemyTile;
 import fr.campus.dungeoncrawler.normal_tiles.SurpriseTile;
@@ -133,20 +135,31 @@ public class Board {
 
         // spell boost
         if (board[playerPosition] instanceof Spell spell) {
-            System.out.println("You found a " + spell.toString() + " spell!");
-            player.increaseAttackLevel(spell.getAttackBoost());
+            if (player instanceof CanUseSpells caster) {
+                System.out.println("You found a " + spell.toString() + " spell!");
+                player.increaseAttackLevel(spell.getAttackBoost());
 
-            // Optionally remove spell
-            board[playerPosition] = new EmptyTile();
+                // Optionally remove spell
+                board[playerPosition] = new EmptyTile();
+            }
+            else {
+                System.out.println("You found a spell, but you can't use it.");
+            }
+
         }
 
         // weapon boost
         if (board[playerPosition] instanceof Weapon weapon) {
-            System.out.println("You found a " + weapon.toString() + " weapon!");
-            player.increaseAttackLevel(weapon.getAttackBoost());
+            if (player instanceof CanUseWeapons fighter) {
+                System.out.println("You found a " + weapon.toString() + " weapon!");
+                player.increaseAttackLevel(weapon.getAttackBoost());
 
-            // Optionally remove weapon
-            board[playerPosition] = new EmptyTile();
+                // Optionally remove weapon
+                board[playerPosition] = new EmptyTile();
+            }else {
+                System.out.println("You found a weapon, but you can't use it.");
+            }
+
         }
 
 
