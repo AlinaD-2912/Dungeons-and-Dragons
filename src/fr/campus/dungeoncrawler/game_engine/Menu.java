@@ -1,9 +1,9 @@
 package fr.campus.dungeoncrawler.game_engine;
 
+import fr.campus.dungeoncrawler.db.DataBase;
 import fr.campus.dungeoncrawler.characters.Character;
 import fr.campus.dungeoncrawler.characters.Warrior;
 import fr.campus.dungeoncrawler.characters.Wizard;
-import fr.campus.dungeoncrawler.game_engine.ScannerHelper;
 
 
 public class Menu {
@@ -43,8 +43,33 @@ public class Menu {
             */
             if (type.equalsIgnoreCase("Wizard")) {
                 player = new Wizard(name);
+                DataBase dbManager = new DataBase();
+                dbManager.connect();
+
+                dbManager.insertCharacter(
+                        player.getType(),
+                        player.getName(),
+                        player.getLifeLevel(),
+                        player.getAttackLevel(),
+                        player.getOffensiveEquipment(), // offensive
+                        "None"              // defensive placeholder if not implemented
+                );
+
+                dbManager.close();
+
             } else if (type.equalsIgnoreCase("Warrior")) {
                 player = new Warrior(name);
+                DataBase dbManager = new DataBase();
+                dbManager.connect();
+
+                dbManager.insertCharacter(
+                        player.getType(),
+                        player.getName(),
+                        player.getLifeLevel(),
+                        player.getAttackLevel(),
+                        player.getOffensiveEquipment(), // offensive
+                        "None"              // defensive placeholder if not implemented
+                );
             } else {
                 System.out.println("Unknown type. Try again.");
                 continue; // restart main loop

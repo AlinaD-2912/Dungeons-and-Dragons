@@ -6,7 +6,8 @@ public abstract class Character {
     private String name;
     private int lifeLevel;
     private int attackLevel;
-    private String weapon;
+    private String offensiveEquipment;
+    private String defensiveEquipment;
 
     private final int baseAttack;
     private final int baseLife;
@@ -18,7 +19,8 @@ public abstract class Character {
         this.name = name;
         this.lifeLevel = lifeLevel;
         this.attackLevel = attackLevel;
-        this.weapon = weapon;
+        this.offensiveEquipment = offensiveEquipment;
+        this.defensiveEquipment = defensiveEquipment;
 
         this.baseAttack = attackLevel;
         this.baseLife = lifeLevel;
@@ -60,9 +62,9 @@ public abstract class Character {
         return attackLevel;
     }
 
-    public String getWeapon() {
-        return weapon;
-    }
+    public String getOffensiveEquipment() { return offensiveEquipment; }
+    public String getDefensiveEquipment() { return defensiveEquipment; }
+
 
     //Setters
     public void setType(String type) {
@@ -80,10 +82,8 @@ public abstract class Character {
     public void setAttackLevel(int attackLevel) {
         this.attackLevel = attackLevel;
     }
-
-    public void setWeapon(String weapon) {
-        this.weapon = weapon;
-    }
+    public void setOffensiveEquipment(String equipment) { this.offensiveEquipment = equipment; }
+    public void setDefensiveEquipment(String equipment) { this.defensiveEquipment = equipment; }
 
     public boolean isAlive() {
         return lifeLevel > 0;
@@ -97,7 +97,8 @@ public abstract class Character {
                 ", Name='" + name + '\'' +
                 ", LifeLevel=" + lifeLevel +
                 ", AttackLevel=" + attackLevel +
-                ", Weapon='" + weapon + '\'' +
+                ", OffensiveEquipment='" + offensiveEquipment + '\'' +
+                ", DefensiveEquipment='" + defensiveEquipment + '\'' +
                 '}';
     }
 }
