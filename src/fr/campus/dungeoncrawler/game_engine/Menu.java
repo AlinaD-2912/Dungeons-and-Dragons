@@ -46,14 +46,17 @@ public class Menu {
                 DataBase dbManager = new DataBase();
                 dbManager.connect();
 
-                dbManager.insertCharacter(
+                int id = dbManager.insertCharacter(
                         player.getType(),
                         player.getName(),
                         player.getLifeLevel(),
                         player.getAttackLevel(),
-                        player.getOffensiveEquipment(), // offensive
-                        "None"              // defensive placeholder if not implemented
+                        player.getOffensiveEquipment(),
+                        "None"
                 );
+
+                player.setId(id);
+
 
                 dbManager.close();
 
@@ -62,14 +65,16 @@ public class Menu {
                 DataBase dbManager = new DataBase();
                 dbManager.connect();
 
-                dbManager.insertCharacter(
+                int id = dbManager.insertCharacter(
                         player.getType(),
                         player.getName(),
                         player.getLifeLevel(),
                         player.getAttackLevel(),
-                        player.getOffensiveEquipment(), // offensive
-                        "None"              // defensive placeholder if not implemented
+                        player.getOffensiveEquipment(),
+                        "None"
                 );
+                player.setId(id);
+
             } else {
                 System.out.println("Unknown type. Try again.");
                 continue; // restart main loop
@@ -119,8 +124,15 @@ public class Menu {
                     }
                     // allows to modify character name
                     case 2 -> {
+                        String oldName = player.getName(); // save before changing
                         String newName = ScannerHelper.getString("New name: ");
                         player.setName(newName);
+
+                        // update DB
+                        DataBase dbManager = new DataBase();
+                        dbManager.connect();
+                        dbManager.updateCharacterNameById(player.getId(), newName);
+                        dbManager.close();
                     }
                     //sends the created character to Game class and starts Game
                     case 3 -> {
@@ -154,7 +166,15 @@ public class Menu {
 
                     }
                     //sends player back to main menu
-                    case 4 -> inSubmenu = false;
+                    case 4 -> {
+                        DataBase dbManager = new DataBase();
+                        dbManager.connect();
+                        dbManager.deleteCharacterById(player.getId());
+                        dbManager.close();
+
+                        player = null; // remove from memory
+                        inSubmenu = false; // go back to main menu
+                    }
                     default -> System.out.println("Invalid option.");
                 }
             }

@@ -97,7 +97,18 @@ public class Board {
     public void placeEnemies() {
         //determines how many enemies to create and place on board
         Enemy[] enemies = {
-                new Dragon(), new Goblin(), new Warlock(), new Warlock(), new Dragon()
+                // 4 dragons
+                new Dragon(), new Dragon(), new Dragon(), new Dragon(),
+                // 10 warlocks
+                new Warlock(), new Warlock(), new Warlock(), new Warlock(), new Warlock(),
+//                new Warlock(), new Warlock(), new Warlock(), new Warlock(), new Warlock(),
+                // 10 goblins
+                new Goblin(), new Goblin(), new Goblin(), new Goblin(),  new Goblin(),
+//                new Goblin(), new Goblin(), new Goblin(), new Goblin(),  new Goblin(),
+                // 5 evil spirits
+                new EvilSpirit(), new EvilSpirit(), new EvilSpirit(), new EvilSpirit(), new EvilSpirit(),
+                // 5 orcs
+                new Orc(), new Orc(), new Orc(), new Orc(), new Orc()
         };
 
         int placed = 0;
@@ -173,8 +184,23 @@ public class Board {
 
     public void placeSurpriseTiles() {
         Tile[] surpriseTiles = {
-                new Potion(Potion.Type.BIG), new Potion(Potion.Type.SMALL), new Spell(Spell.Type.FIREBALL),
-                new Spell(Spell.Type.THUNDER), new Weapon(Weapon.Type.SWORD), new Weapon(Weapon.Type.MACE)
+                // 5 maces
+                new Weapon(Weapon.Type.MACE), new Weapon(Weapon.Type.MACE), new Weapon(Weapon.Type.MACE),
+                new Weapon(Weapon.Type.MACE), new Weapon(Weapon.Type.MACE),
+                // 4 swords
+                new Weapon(Weapon.Type.SWORD), new Weapon(Weapon.Type.SWORD), new Weapon(Weapon.Type.SWORD),
+                new Weapon(Weapon.Type.SWORD),
+                // 5 thunders
+                new Spell(Spell.Type.THUNDER), new Spell(Spell.Type.THUNDER), new Spell(Spell.Type.THUNDER),
+                new Spell(Spell.Type.THUNDER), new Spell(Spell.Type.THUNDER),
+                // 2 fireballs
+                new Spell(Spell.Type.FIREBALL), new Spell(Spell.Type.FIREBALL),
+                // 6 small potions
+                new Potion(Potion.Type.SMALL), new Potion(Potion.Type.SMALL), new Potion(Potion.Type.SMALL),
+                new Potion(Potion.Type.SMALL), new Potion(Potion.Type.SMALL), new Potion(Potion.Type.SMALL),
+                // 2 big potions
+                new Potion(Potion.Type.BIG), new Potion(Potion.Type.BIG),
+
         };
 
         int placed = 0;

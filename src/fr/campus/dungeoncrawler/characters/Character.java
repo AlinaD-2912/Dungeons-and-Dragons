@@ -12,9 +12,21 @@ public abstract class Character {
     private final int baseAttack;
     private final int baseLife;
 
+    protected int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     //Constructor
-    public Character(String type, String name, int lifeLevel, int attackLevel, String weapon) {
+    public Character(int id, String type, String name, int lifeLevel, int attackLevel,
+                     String offensiveEquipment, String defensiveEquipment) {
+        this.id = id;
         this.type = type;
         this.name = name;
         this.lifeLevel = lifeLevel;
@@ -25,6 +37,7 @@ public abstract class Character {
         this.baseAttack = attackLevel;
         this.baseLife = lifeLevel;
     }
+
 
     // reset character after game over or player won
     public void resetStats() {

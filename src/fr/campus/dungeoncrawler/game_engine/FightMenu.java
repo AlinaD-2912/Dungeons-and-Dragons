@@ -44,7 +44,6 @@ public class FightMenu {
         player.setLifeLevel(player.getLifeLevel() - enemy.getAttackLevel());
         System.out.println(" ");
         System.out.println("The " + enemy.getType() + " flees after the attack!");
-        System.out.println(" ");
         System.out.println("Your remaining health: " + player.getLifeLevel());
         System.out.println(" ");
         if (player.getLifeLevel() <= 0) {
