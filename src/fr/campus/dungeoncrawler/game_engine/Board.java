@@ -30,7 +30,7 @@ public class Board {
      * Board creates -> enemies and places them on -> Board placeEnemies()
      */
 
-    private final int BOARD_SIZE = 64;
+    private final int BOARD_SIZE = 100;
     //Create an array that can hold 64 references to Tile objects
     private final Tile[] board = new Tile[BOARD_SIZE];
     private int playerPosition = 0;
@@ -118,7 +118,8 @@ public class Board {
 
             //Checks whether the object stored at board[position] is an instance of the EmptyTile class
             if (board[position] instanceof EmptyTile) {
-                board[position] = new EnemyTile(enemies[placed]); // Replace with new EnemyTile
+                board[position] = new EnemyTile(enemies[placed]);
+                ((EnemyTile)board[position]).setBoard(this);
                 placed++;
             }
         }
@@ -158,6 +159,7 @@ public class Board {
 
         }
 
+
         // weapon boost
         if (board[playerPosition] instanceof Weapon weapon) {
             if (player instanceof CanUseWeapons) {
@@ -179,6 +181,12 @@ public class Board {
         return currentTile.onTile(player);
     }
 
+    public void movePlayerBack(int steps) {
+        boolean playerWon = updatePlayerPosition(-steps);
+        if (playerWon) {
+            System.out.println("You fled but somehow moved beyond board end? Check logic.");
+        }
+    }
 
 
     public void placeSurpriseTiles() {
@@ -217,10 +225,7 @@ public class Board {
 
 
     // Separates position logic and throws exception if out of board
-    private boolean updatePlayerPosition(int steps)
-            //throws OutOfBoardException
-    {
-        //updates the player position
+    private boolean updatePlayerPosition(int steps) {
         playerPosition += steps;
 
         if (playerPosition >= BOARD_SIZE) {
@@ -229,6 +234,12 @@ public class Board {
             return true; // Player moved beyond the board — game ends
         }
 
+        if (playerPosition < 0) {
+            playerPosition = 0;  // clamp to start of board
+            System.out.println("You can't move beyond the start of the board. Position reset to 0.");
+        }
+
         return false;
     }
+
 }
