@@ -100,10 +100,10 @@ public class Board {
                 new Dragon(), new Dragon(), new Dragon(), new Dragon(),
                 // 10 warlocks
                 new Warlock(), new Warlock(), new Warlock(), new Warlock(), new Warlock(),
-//                new Warlock(), new Warlock(), new Warlock(), new Warlock(), new Warlock(),
+                new Warlock(), new Warlock(), new Warlock(), new Warlock(), new Warlock(),
                 // 10 goblins
                 new Goblin(), new Goblin(), new Goblin(), new Goblin(),  new Goblin(),
-//                new Goblin(), new Goblin(), new Goblin(), new Goblin(),  new Goblin(),
+                new Goblin(), new Goblin(), new Goblin(), new Goblin(),  new Goblin(),
                 // 5 evil spirits
                 new EvilSpirit(), new EvilSpirit(), new EvilSpirit(), new EvilSpirit(), new EvilSpirit(),
                 // 5 orcs

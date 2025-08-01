@@ -33,7 +33,7 @@ public class FightMenu {
         System.out.println("-------- Fight Started! -----------");
         System.out.println(" ");
         graphic = new Graphic();
-        System.out.println(graphic.gameGraphic(enemy));
+        System.out.println(graphic.enemyGraphic(enemy));
         System.out.println("-------- ENEMY -----------");
         System.out.println("Enemy: " + enemy.getType());
         System.out.println("Attack Level: " + enemy.getAttackLevel());
@@ -67,7 +67,7 @@ public class FightMenu {
                 System.out.println("The " + enemy.getType() + " hits back with power: " + enemy.getAttackLevel());
                 player.setLifeLevel(player.getLifeLevel() - enemy.getAttackLevel());
                 System.out.println(" ");
-                System.out.println("The " + enemy.getType() + " flees after the attack!");
+//                System.out.println("The " + enemy.getType() + " flees after the attack!");
                 System.out.println("Your remaining health: " + player.getLifeLevel());
                 System.out.println(" ");
                 if (player.getLifeLevel() <= 0) {
