@@ -7,7 +7,6 @@ import fr.campus.dungeoncrawler.intarfaces.CanUseSpells;
 import fr.campus.dungeoncrawler.intarfaces.CanUseWeapons;
 import fr.campus.dungeoncrawler.normal_tiles.EmptyTile;
 import fr.campus.dungeoncrawler.normal_tiles.EnemyTile;
-import fr.campus.dungeoncrawler.normal_tiles.SurpriseTile;
 import fr.campus.dungeoncrawler.surprise_tiles.Potion;
 import fr.campus.dungeoncrawler.surprise_tiles.Spell;
 import fr.campus.dungeoncrawler.surprise_tiles.Weapon;
@@ -146,7 +145,7 @@ public class Board {
 
         // spell boost
         if (board[playerPosition] instanceof Spell spell) {
-            if (player instanceof CanUseSpells caster) {
+            if (player instanceof CanUseSpells) {
                 System.out.println("You found a " + spell.toString() + " spell!");
                 player.increaseAttackLevel(spell.getAttackBoost());
 
@@ -161,7 +160,7 @@ public class Board {
 
         // weapon boost
         if (board[playerPosition] instanceof Weapon weapon) {
-            if (player instanceof CanUseWeapons fighter) {
+            if (player instanceof CanUseWeapons) {
                 System.out.println("You found a " + weapon.toString() + " weapon!");
                 player.increaseAttackLevel(weapon.getAttackBoost());
 
