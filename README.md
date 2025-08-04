@@ -25,28 +25,25 @@ Reproduire l’esprit du jeu D&D dans un environnement Java console, avec :
 - Console Java pour l’interface utilisateur
   
 ## Lancer le projet localement
-1. Cloner le dépôt :
-``bash
+# 1. Cloner le dépôt :
 git clone https://github.com/AlinaD-2912/Dungeons-and-Dragons.git
-cd Dungeons-and-Dragons.git ``
-2. Configuration base de données :
-   - Crée une base de données MySQL :
-     ``bash
-     CREATE DATABASE dnd_game;``
-     - Exemple de table pour les personnages :
-     ``bash
-     CREATE TABLE characters (
+cd Dungeons-and-Dragons
+-- 2. Configuration base de données :
+CREATE DATABASE dnd_game;
+
+-- Exemple de table pour les personnages :
+CREATE TABLE characters (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255),
   type VARCHAR(50),
   level INT,
   hp INT,
   attack INT
-); ``
-3. Compiler et exécuter
- ``bash
-     javac Main.java
-   java Main``
+);
+# 3. Compiler et exécuter :
+javac Main.java
+java Main
+
 ## Exemple de gameplay
    
 <pre> ``` 
