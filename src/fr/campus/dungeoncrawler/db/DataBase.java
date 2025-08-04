@@ -17,8 +17,6 @@ public class DataBase {
     private static final String DB_USER = "user";
     private static final String DB_PASSWORD = "password";
 
-//    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//    String json = gson.toJson(this);
 
     //package iported by java.sql
     private Connection connection;
@@ -39,19 +37,21 @@ public class DataBase {
         String query = "INSERT INTO characters (type, name, lifePoints, strength, offensiveEquipment, defensiveEquipment) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
-//        final GsonBuilder builder = new GsonBuilder();
-//        final Gson gson = builder.create();
-//        final Map<String, String, Integer, Integer> valeurs = new HashMap<Integer, String>();
-
         int generatedId = -1;
 
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            Gson gson = new Gson();
+            String offensiveJson = gson.toJson(offensiveEquipment);
+            String defensiveJson = gson.toJson(defensiveEquipment);
+
             stmt.setString(1, type);
             stmt.setString(2, name);
             stmt.setInt(3, lifePoints);
             stmt.setInt(4, strength);
-            stmt.setInt(5, offensiveEquipment.getId());
-            stmt.setInt(6, defensiveEquipment.getId());
+            stmt.setString(5, offensiveJson);  // Stored as JSON
+            stmt.setString(6, defensiveJson);  // Stored as JSON
+
             stmt.executeUpdate();
 
             ResultSet rs = stmt.getGeneratedKeys();
@@ -61,7 +61,7 @@ public class DataBase {
             }
 
         } catch (SQLException e) {
-            System.err.println(" Failed to save character: " + e.getMessage());
+            System.err.println("Failed to save character: " + e.getMessage());
         }
 
         return generatedId;
