@@ -4,6 +4,10 @@ import fr.campus.dungeoncrawler.db.DataBase;
 import fr.campus.dungeoncrawler.characters.Character;
 import fr.campus.dungeoncrawler.characters.Warrior;
 import fr.campus.dungeoncrawler.characters.Wizard;
+import fr.campus.dungeoncrawler.surprise_tiles.DefaultDefensiveEQP;
+import fr.campus.dungeoncrawler.surprise_tiles.DefaultOffensiveEqp;
+import fr.campus.dungeoncrawler.surprise_tiles.DefensiveEquipment;
+import fr.campus.dungeoncrawler.surprise_tiles.OffensiveEquipment;
 
 import java.awt.*;
 
@@ -40,13 +44,15 @@ public class Menu {
             // if choice is 2 stop the program
             if (choice == 2) break;
 
-            String type = ScannerHelper.getString("Type (Wizard/Warrior): ");
+            int type = ScannerHelper.getInt("Type (Wizard - 1 /Warrior - 2): ");
             String name = ScannerHelper.getString("Name: ");
 
             /*
             * Checks if the user input the same as one of 2 options Wizard or Warrior
             */
-            if (type.equalsIgnoreCase("Wizard")) {
+            OffensiveEquipment defaultOffensive = new DefaultOffensiveEqp();
+            DefensiveEquipment defaultDefensive = new DefaultDefensiveEQP();
+            if (type == 1) {
                 player = new Wizard(name);
                 DataBase dbManager = new DataBase();
                 dbManager.connect();
@@ -56,8 +62,8 @@ public class Menu {
                         player.getName(),
                         player.getLifeLevel(),
                         player.getAttackLevel(),
-                        player.getOffensiveEquipment(),
-                        "None"
+                        defaultOffensive,
+                        defaultDefensive
                 );
 
                 player.setId(id);
@@ -65,7 +71,7 @@ public class Menu {
 
                 dbManager.close();
 
-            } else if (type.equalsIgnoreCase("Warrior")) {
+            } else if (type == 2) {
                 player = new Warrior(name);
                 DataBase dbManager = new DataBase();
                 dbManager.connect();
@@ -75,8 +81,8 @@ public class Menu {
                         player.getName(),
                         player.getLifeLevel(),
                         player.getAttackLevel(),
-                        player.getOffensiveEquipment(),
-                        "None"
+                        defaultOffensive,
+                        defaultDefensive
                 );
                 player.setId(id);
 

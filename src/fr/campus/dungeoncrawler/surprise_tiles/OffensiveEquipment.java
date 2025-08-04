@@ -8,6 +8,17 @@ public abstract class OffensiveEquipment extends SurpriseTile {
     private int attackLevel;
     private String name;
 
+    protected int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
     public int getAttackLevel() {
         return attackLevel;
     }
@@ -16,5 +27,10 @@ public abstract class OffensiveEquipment extends SurpriseTile {
 
     public void setAttackLevel(int attackLevel) {this.attackLevel = attackLevel; }
     public void setName(String name) { this.name = name; }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 
 }

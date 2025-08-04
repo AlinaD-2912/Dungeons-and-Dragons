@@ -1,13 +1,18 @@
 package fr.campus.dungeoncrawler.characters;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import fr.campus.dungeoncrawler.surprise_tiles.DefensiveEquipment;
+import fr.campus.dungeoncrawler.surprise_tiles.OffensiveEquipment;
+
 public abstract class Character {
 
     private String type;
     private String name;
     private int lifeLevel;
     private int attackLevel;
-    private String offensiveEquipment;
-    private String defensiveEquipment;
+    private OffensiveEquipment offensiveEquipment;
+    private DefensiveEquipment defensiveEquipment;
 
     private final int baseAttack;
     private final int baseLife;
@@ -25,7 +30,7 @@ public abstract class Character {
 
     //Constructor
     public Character(int id, String type, String name, int lifeLevel, int attackLevel,
-                     String offensiveEquipment, String defensiveEquipment) {
+                     OffensiveEquipment offensiveEquipment, DefensiveEquipment defensiveEquipment) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -57,6 +62,11 @@ public abstract class Character {
         System.out.println("You gained " + amount + " attack points! Current attack level: " + this.attackLevel);
     }
 
+    public void decreaseAttackLevel(int amount) {
+        this.attackLevel -= amount;
+        System.out.println("You lost " + amount + " attack points after the battle. Current attack level: " + this.attackLevel);
+    }
+
 
     //Getters
     public String getType() {
@@ -75,8 +85,8 @@ public abstract class Character {
         return attackLevel;
     }
 
-    public String getOffensiveEquipment() { return offensiveEquipment; }
-    public String getDefensiveEquipment() { return defensiveEquipment; }
+    public OffensiveEquipment getOffensiveEquipment() { return offensiveEquipment; }
+    public DefensiveEquipment getDefensiveEquipment() { return defensiveEquipment; }
 
 
     //Setters
@@ -95,8 +105,8 @@ public abstract class Character {
     public void setAttackLevel(int attackLevel) {
         this.attackLevel = attackLevel;
     }
-    public void setOffensiveEquipment(String equipment) { this.offensiveEquipment = equipment; }
-    public void setDefensiveEquipment(String equipment) { this.defensiveEquipment = equipment; }
+    public void setOffensiveEquipment(OffensiveEquipment equipment) { this.offensiveEquipment = equipment; }
+    public void setDefensiveEquipment(DefensiveEquipment equipment) { this.defensiveEquipment = equipment; }
 
     public boolean isAlive() {
         return lifeLevel > 0;

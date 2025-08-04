@@ -62,6 +62,7 @@ public class FightMenu {
                 System.out.println(" ");
                 if (enemy.getLifeLevel() <= 0) {
                     System.out.println("You defeated the " + enemy.getType() + "!");
+                    player.decreaseAttackLevel(1);
                     return FightResult.ENEMY_DEAD;
                 }
                 System.out.println("The " + enemy.getType() + " hits back with power: " + enemy.getAttackLevel());

@@ -2,16 +2,30 @@ package fr.campus.dungeoncrawler.db;
 
 import java.sql.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import fr.campus.dungeoncrawler.surprise_tiles.DefensiveEquipment;
+import fr.campus.dungeoncrawler.surprise_tiles.OffensiveEquipment;
+
 public class DataBase {
 
+    //links for the correct connection
     private static final String DB_URL = "jdbc:mysql://localhost:3306/dungeons_and_dragons";
     private static final String DB_USER = "user";
     private static final String DB_PASSWORD = "password";
 
+//    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//    String json = gson.toJson(this);
+
+    //package iported by java.sql
     private Connection connection;
 
     public void connect() {
         try {
+            //getConnection is methode imported by java.sql and attempts to establish a connection to the given database URL
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             System.out.println(" Connected to MySQL database!");
         } catch (SQLException e) {
@@ -20,9 +34,15 @@ public class DataBase {
     }
 
     public int insertCharacter(String type, String name, int lifePoints, int strength,
-                               String offensiveEquipment, String defensiveEquipment)
+                               OffensiveEquipment offensiveEquipment, DefensiveEquipment defensiveEquipment)
     {
-        String query = "INSERT INTO characters (type, name, lifePoints, strength, offensiveEquipment, defensiveEquipment) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO characters (type, name, lifePoints, strength, offensiveEquipment, defensiveEquipment) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+//        final GsonBuilder builder = new GsonBuilder();
+//        final Gson gson = builder.create();
+//        final Map<String, String, Integer, Integer> valeurs = new HashMap<Integer, String>();
+
         int generatedId = -1;
 
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -30,8 +50,8 @@ public class DataBase {
             stmt.setString(2, name);
             stmt.setInt(3, lifePoints);
             stmt.setInt(4, strength);
-            stmt.setString(5, offensiveEquipment);
-            stmt.setString(6, defensiveEquipment);
+            stmt.setInt(5, offensiveEquipment.getId());
+            stmt.setInt(6, defensiveEquipment.getId());
             stmt.executeUpdate();
 
             ResultSet rs = stmt.getGeneratedKeys();

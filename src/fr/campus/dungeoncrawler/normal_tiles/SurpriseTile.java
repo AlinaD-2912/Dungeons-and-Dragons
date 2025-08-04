@@ -23,4 +23,9 @@ public abstract class SurpriseTile extends Tile {
     public boolean onTile(Character player) {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

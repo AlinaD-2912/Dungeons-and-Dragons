@@ -17,7 +17,7 @@ public class MainMenuPanel extends JPanel {
 
         JPanel buttons = new JPanel();
         JButton createChar = new JButton("Create Character");
-        JButton quit       = new JButton("Quit");
+        JButton quit = new JButton("Quit");
 
         createChar.addActionListener(e -> {
             Character player = new Warrior("Hero");
