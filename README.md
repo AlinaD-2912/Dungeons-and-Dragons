@@ -49,4 +49,15 @@ cd Dungeons-and-Dragons.git ``
    java Main``
 ## Exemple de gameplay
    
-<pre> ``` --- Main Menu --- 1. Create character 2. Quit Choose: > 1 Type (Wizard/Warrior): > Wizard Name: > Leon Connected to MySQL database! Character saved with ID: 1 Disconnected from database. --- Character Menu --- 1. Show character 2. Modify name 3. Start game 4. Back > 3 Press Enter to roll the dice... You rolled: 3 Your new position: 3 Press Enter to roll the dice... You rolled: 1 Your new position: 4 You encountered a Evil Spirit! -------- Fight Started! ----------- ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣦⠀ ⠀⠀⠀⠀⣰⣿⡟⢻⣿⡟⢻⣧ ⠀⠀⠀⣰⣿⣿⣇⣸⣿⣇⣸⣿ ⠀⠀⣴⣿⣿⣿⣿⠟⢻⣿⣿⣿ ⣠⣾⣿⣿⣿⣿⣿⣤⣼⣿⣿⠇ ⢿⡿⢿⣿⣿⣿⣿⣿⣿⣿⡿⠀ ⠀⠀⠈⠿⠿⠋⠙⢿⣿⡿⠁⠀ -------- ENEMY ----------- Enemy: Evil Spirit Attack Level: 7 Life Level: 15 -------- YOU ----------- Attack Level: 13 Life Level: 3 --- Choice --- 1. Attack 2. Flee Choose: ``` </pre>
+<pre> ``` 
+ --- Main Menu --- 
+ 1. Create character 
+ 2. Quit Choose: 
+ > 1 
+ Type (Wizard/Warrior): 
+ > Wizard Name: 
+ > Leon 
+ Connected to MySQL database! 
+ Character saved with ID: 1 
+ Disconnected from database. 
+ --- Character Menu --- 1. Show character 2. Modify name 3. Start game 4. Back > 3 Press Enter to roll the dice... You rolled: 3 Your new position: 3 Press Enter to roll the dice... You rolled: 1 Your new position: 4 You encountered a Evil Spirit! -------- Fight Started! ----------- ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣦⠀ ⠀⠀⠀⠀⣰⣿⡟⢻⣿⡟⢻⣧ ⠀⠀⠀⣰⣿⣿⣇⣸⣿⣇⣸⣿ ⠀⠀⣴⣿⣿⣿⣿⠟⢻⣿⣿⣿ ⣠⣾⣿⣿⣿⣿⣿⣤⣼⣿⣿⠇ ⢿⡿⢿⣿⣿⣿⣿⣿⣿⣿⡿⠀ ⠀⠀⠈⠿⠿⠋⠙⢿⣿⡿⠁⠀ -------- ENEMY ----------- Enemy: Evil Spirit Attack Level: 7 Life Level: 15 -------- YOU ----------- Attack Level: 13 Life Level: 3 --- Choice --- 1. Attack 2. Flee Choose: ``` </pre>
