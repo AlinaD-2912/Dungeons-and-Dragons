@@ -35,7 +35,7 @@ cd Dungeons-and-Dragons
 ```bash
 CREATE DATABASE dnd_game;
 ```
--- Exemple de table pour les personnages :
+- Exemple de table pour les personnages :
 ```bash
 CREATE TABLE characters (
   id INT AUTO_INCREMENT PRIMARY KEY,
