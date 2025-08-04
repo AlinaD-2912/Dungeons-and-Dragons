@@ -242,6 +242,12 @@ public class Board {
         return false;
     }
 
+    public Tile[] getTiles() {
+        return this.board;
+    }
+
+
+
 
 
 }

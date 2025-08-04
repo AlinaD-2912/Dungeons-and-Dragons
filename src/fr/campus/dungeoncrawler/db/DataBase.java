@@ -7,8 +7,32 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import fr.campus.dungeoncrawler.surprise_tiles.DefensiveEquipment;
-import fr.campus.dungeoncrawler.surprise_tiles.OffensiveEquipment;
+
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.NamedType;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+
+
+
+import fr.campus.dungeoncrawler.normal_tiles.EmptyTile;
+import fr.campus.dungeoncrawler.normal_tiles.EnemyTile;
+import fr.campus.dungeoncrawler.surprise_tiles.*;
+import fr.campus.dungeoncrawler.game_engine.Tile;
 
 public class DataBase {
 
@@ -110,6 +134,67 @@ public class DataBase {
             System.out.println("Failed to delete character: " + e.getMessage());
         }
     }
+
+    public void insertBoard(String playerName, Tile[] board) {
+        String insertBoard = "INSERT INTO boards (player_name, board_json) VALUES (?, ?)";
+
+        try {
+            // Register polymorphic types for proper deserialization later
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.activateDefaultTyping(
+                    LaissezFaireSubTypeValidator.instance,
+                    ObjectMapper.DefaultTyping.NON_FINAL
+            );
+
+            // Optional: Register known subtypes if needed (explicit typing)
+            mapper.registerSubtypes(
+                    new NamedType(EmptyTile.class, "empty"),
+                    new NamedType(EnemyTile.class, "enemy"),
+                    new NamedType(Potion.class, "potion"),
+                    new NamedType(Spell.class, "spell"),
+                    new NamedType(Weapon.class, "weapon")
+            );
+
+            String jsonBoard = mapper.writeValueAsString(board); // serialize to JSON
+
+            try (PreparedStatement stmt = connection.prepareStatement(insertBoard)) {
+                stmt.setString(1, playerName);
+                stmt.setString(2, jsonBoard);
+                stmt.executeUpdate();
+                System.out.println(" Board saved to DB!");
+            }
+
+        } catch (Exception e) {
+            System.err.println(" Failed to save board: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public Tile[] getBoardByPlayer(String playerName) {
+        String query = "SELECT board_json FROM boards WHERE player_name = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, playerName);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String json = rs.getString("board_json");
+
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.activateDefaultTyping(
+                        LaissezFaireSubTypeValidator.instance,
+                        ObjectMapper.DefaultTyping.NON_FINAL
+                );
+
+                return mapper.readValue(json, Tile[].class);
+            }
+        } catch (Exception e) {
+            System.err.println(" Failed to read board: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
 
 
 

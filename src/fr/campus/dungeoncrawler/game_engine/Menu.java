@@ -135,9 +135,11 @@ public class Menu {
                         Game game = new Game(player);
                         boolean playerSurvived = game.start();
 
+
                         if (!playerSurvived) {
                             boolean postGame = true;
                             while (postGame) {
+                                game.saveGame(); // Save the game state after finishing
                                 System.out.println("\n--- Game Over Menu ---");
                                 System.out.println("1. Restart with same character (reset stats)");
                                 System.out.println("2. Change character");

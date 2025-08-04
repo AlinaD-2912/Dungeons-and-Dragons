@@ -1,6 +1,7 @@
 package fr.campus.dungeoncrawler.game_engine;
 
 import fr.campus.dungeoncrawler.characters.Character;
+import fr.campus.dungeoncrawler.db.DataBase;
 
 public class Game {
 
@@ -29,6 +30,21 @@ public class Game {
 
         System.out.println("Game over, thanks for playing!");
         return board.getPlayer().isAlive(); // returns true if player survived
+    }
+
+    public void saveGame() {
+        DataBase db = new DataBase();
+        db.connect();
+
+        // Assuming your Board has a method getTiles() that returns Tile[]
+        Tile[] tiles = board.getTiles();
+
+        String playerName = board.getPlayer().getName();
+
+        db.insertBoard(playerName, tiles);
+        db.close();
+
+        System.out.println("Game saved successfully!");
     }
 
 }
