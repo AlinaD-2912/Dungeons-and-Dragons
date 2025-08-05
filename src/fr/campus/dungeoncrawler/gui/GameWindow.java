@@ -5,10 +5,12 @@ import fr.campus.dungeoncrawler.enemies.Enemy;
 
 import javax.swing.*;
 
+// Main controller JFrame
+
 public class GameWindow extends JFrame {
 
     public GameWindow() {
-        setTitle("Dungeon Crawler");
+        setTitle("Dungeons and Dragons");
         setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

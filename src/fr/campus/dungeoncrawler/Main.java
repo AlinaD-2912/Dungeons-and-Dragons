@@ -1,6 +1,9 @@
 package fr.campus.dungeoncrawler;
 import fr.campus.dungeoncrawler.characters.Character;
 import fr.campus.dungeoncrawler.game_engine.Menu;
+import fr.campus.dungeoncrawler.gui.GameWindow;
+
+import javax.swing.*;
 
 public class Main {
     /**
@@ -8,8 +11,10 @@ public class Main {
      *
      */
     public static void main(String[] args) {
-        Menu menu = new Menu();
-        menu.start();
+//        Menu menu = new Menu();
+//        menu.start();
+
+        SwingUtilities.invokeLater(GameWindow::new);
     }
 
 

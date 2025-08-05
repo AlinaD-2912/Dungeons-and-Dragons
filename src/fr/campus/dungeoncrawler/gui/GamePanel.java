@@ -6,6 +6,7 @@ import fr.campus.dungeoncrawler.characters.Character;
 import javax.swing.*;
 import java.awt.*;
 
+// Displays player stats and "start" game
 public class GamePanel extends JPanel {
 
     public GamePanel(GameWindow window, Character player) {
