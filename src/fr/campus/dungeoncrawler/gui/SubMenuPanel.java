@@ -77,10 +77,27 @@ public class SubMenuPanel extends JPanel {
     }
 
     private void showCharacterInfo() {
-        // Clear previous content
         centerPanel.removeAll();
 
-        // Create character info display
+        URL imageURL = getClass().getResource("/fr/campus/dungeoncrawler/images/wizard.jpg");
+        // Add image to WEST or NORTH
+        if (player instanceof Warrior) {
+            imageURL = getClass().getResource("/fr/campus/dungeoncrawler/images/warrior.jpg");
+        }
+
+        if (imageURL != null) {
+            ImageIcon originalIcon = new ImageIcon(imageURL);
+            Image originalImg = originalIcon.getImage();
+
+            // Scale to 150x150 pixels
+            Image scaledImg = originalImg.getScaledInstance(600, 300, Image.SCALE_SMOOTH);
+
+            JLabel bgLabel = new JLabel(new ImageIcon(scaledImg));
+            bgLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // Optional border
+            centerPanel.add(bgLabel, BorderLayout.NORTH);
+        }
+
+        // Create text area
         JTextArea info = new JTextArea();
         info.setEditable(false);
         info.setFont(new Font("Monospaced", Font.PLAIN, 14));
@@ -90,15 +107,11 @@ public class SubMenuPanel extends JPanel {
                 "Attack: " + player.getAttackLevel() + "\n" +
                 "Life: " + player.getLifeLevel());
 
-        // Add scroll pane in case of long text
         JScrollPane scrollPane = new JScrollPane(info);
-        centerPanel.add(scrollPane, BorderLayout.CENTER);
+        centerPanel.add(scrollPane, BorderLayout.CENTER); // Text in CENTER
 
-        // Refresh the panel to show changes
         centerPanel.revalidate();
         centerPanel.repaint();
-
-        System.out.println("Character info displayed!"); // Debug output
     }
 
     private void modifyCharacterName() {
