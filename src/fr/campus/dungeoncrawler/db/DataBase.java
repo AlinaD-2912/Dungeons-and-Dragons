@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
@@ -139,14 +142,11 @@ public class DataBase {
         String insertBoard = "INSERT INTO boards (player_name, board_json) VALUES (?, ?)";
 
         try {
-            // Register polymorphic types for proper deserialization later
             ObjectMapper mapper = new ObjectMapper();
             mapper.activateDefaultTyping(
                     LaissezFaireSubTypeValidator.instance,
                     ObjectMapper.DefaultTyping.NON_FINAL
             );
-
-            // Optional: Register known subtypes if needed (explicit typing)
             mapper.registerSubtypes(
                     new NamedType(EmptyTile.class, "empty"),
                     new NamedType(EnemyTile.class, "enemy"),
@@ -154,8 +154,10 @@ public class DataBase {
                     new NamedType(Spell.class, "spell"),
                     new NamedType(Weapon.class, "weapon")
             );
+            // IMPORTANT: Ignore unknown JSON properties on serialization/deserialization
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-            String jsonBoard = mapper.writeValueAsString(board); // serialize to JSON
+            String jsonBoard = mapper.writeValueAsString(board);
 
             try (PreparedStatement stmt = connection.prepareStatement(insertBoard)) {
                 stmt.setString(1, playerName);
@@ -163,18 +165,20 @@ public class DataBase {
                 stmt.executeUpdate();
                 System.out.println(" Board saved to DB!");
             }
-
         } catch (Exception e) {
             System.err.println(" Failed to save board: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+
     public Tile[] getBoardByPlayer(String playerName) {
         String query = "SELECT board_json FROM boards WHERE player_name = ?";
+
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, playerName);
             ResultSet rs = stmt.executeQuery();
+
             if (rs.next()) {
                 String json = rs.getString("board_json");
 
@@ -183,6 +187,15 @@ public class DataBase {
                         LaissezFaireSubTypeValidator.instance,
                         ObjectMapper.DefaultTyping.NON_FINAL
                 );
+                mapper.registerSubtypes(
+                        new NamedType(EmptyTile.class, "empty"),
+                        new NamedType(EnemyTile.class, "enemy"),
+                        new NamedType(Potion.class, "potion"),
+                        new NamedType(Spell.class, "spell"),
+                        new NamedType(Weapon.class, "weapon")
+                );
+                // IMPORTANT: Disable failure on unknown props here too
+                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
                 return mapper.readValue(json, Tile[].class);
             }
@@ -192,7 +205,6 @@ public class DataBase {
         }
         return null;
     }
-
 
 
 

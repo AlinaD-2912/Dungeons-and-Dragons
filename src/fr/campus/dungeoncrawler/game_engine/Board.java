@@ -13,18 +13,19 @@ import fr.campus.dungeoncrawler.surprise_tiles.Weapon;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+
 public class Board {
     /**
      * Board is responsible for organising everything that happens on the board
      * it determines the number of total tiles
      * if player meats with enemy it sends player and enemy to class FightMenu to start the fight
-     *...
+     * ...
      * Manages players movements
      * Decides where to place enemies
      * Updates player position
      * Creates and assigns tile types
      * Decides where to place surprise tiles
-     *...
+     * ...
      * Board sends -> enemy, player to -> class FightMenu and starts a fight
      * Board rolls -> dice from -> class Dice and sends result back to -> Board movePlayer()
      * Board creates -> enemies and places them on -> Board placeEnemies()
@@ -37,7 +38,8 @@ public class Board {
     private Dice dice;
     private Character player;
 
-    public Board(Character player) {
+
+        public Board(Character player) {
 
         //Assigns the values to empty objects
         this.dice = new Dice();
@@ -53,6 +55,33 @@ public class Board {
         placeEnemies();
         //Place surprise Tiles
         placeSurpriseTiles();
+        printBoard();
+    }
+    public Board(Character player, Tile[] loadedTiles) {
+        this.player = player;
+        this.dice = new Dice();
+
+        if (loadedTiles == null || loadedTiles.length != BOARD_SIZE) {
+            // Defensive fallback - if loadedTiles is null or wrong size,
+            // initialize empty board as usual
+            for (int i = 0; i < BOARD_SIZE; i++) {
+                board[i] = new EmptyTile();
+            }
+            placeEnemies();
+            placeSurpriseTiles();
+        } else {
+            // Use loaded tiles directly
+            for (int i = 0; i < BOARD_SIZE; i++) {
+                board[i] = loadedTiles[i];
+                // If tile is EnemyTile, set its board reference
+                if (board[i] instanceof EnemyTile enemyTile) {
+                    enemyTile.setBoard(this);
+                }
+            }
+        }
+
+        // Initialize player position (optional, can be stored/restored as well)
+        playerPosition = 0;  // Or restore from DB if you save it
         printBoard();
     }
 
@@ -92,7 +121,6 @@ public class Board {
     }
 
 
-
     public void placeEnemies() {
         //determines how many enemies to create and place on board
         Enemy[] enemies = {
@@ -102,8 +130,8 @@ public class Board {
                 new Warlock(), new Warlock(), new Warlock(), new Warlock(), new Warlock(),
                 new Warlock(), new Warlock(), new Warlock(), new Warlock(), new Warlock(),
                 // 10 goblins
-                new Goblin(), new Goblin(), new Goblin(), new Goblin(),  new Goblin(),
-                new Goblin(), new Goblin(), new Goblin(), new Goblin(),  new Goblin(),
+                new Goblin(), new Goblin(), new Goblin(), new Goblin(), new Goblin(),
+                new Goblin(), new Goblin(), new Goblin(), new Goblin(), new Goblin(),
                 // 5 evil spirits
                 new EvilSpirit(), new EvilSpirit(), new EvilSpirit(), new EvilSpirit(), new EvilSpirit(),
                 // 5 orcs
@@ -119,7 +147,7 @@ public class Board {
             //Checks whether the object stored at board[position] is an instance of the EmptyTile class
             if (board[position] instanceof EmptyTile) {
                 board[position] = new EnemyTile(enemies[placed]);
-                ((EnemyTile)board[position]).setBoard(this);
+                ((EnemyTile) board[position]).setBoard(this);
                 placed++;
             }
         }
@@ -152,8 +180,7 @@ public class Board {
 
                 // Optionally remove spell
                 board[playerPosition] = new EmptyTile();
-            }
-            else {
+            } else {
                 System.out.println("You found a spell, but you can't use it.");
             }
 
@@ -168,7 +195,7 @@ public class Board {
 
                 // Optionally remove weapon
                 board[playerPosition] = new EmptyTile();
-            }else {
+            } else {
                 System.out.println("You found a weapon, but you can't use it.");
             }
 
@@ -192,21 +219,21 @@ public class Board {
     public void placeSurpriseTiles() {
         Tile[] surpriseTiles = {
                 // 5 maces
-                new Weapon(Weapon.Type.MACE), new Weapon(Weapon.Type.MACE), new Weapon(Weapon.Type.MACE),
-                new Weapon(Weapon.Type.MACE), new Weapon(Weapon.Type.MACE),
+                new Weapon(Weapon.WeaponType.MACE), new Weapon(Weapon.WeaponType.MACE), new Weapon(Weapon.WeaponType.MACE),
+                new Weapon(Weapon.WeaponType.MACE), new Weapon(Weapon.WeaponType.MACE),
                 // 4 swords
-                new Weapon(Weapon.Type.SWORD), new Weapon(Weapon.Type.SWORD), new Weapon(Weapon.Type.SWORD),
-                new Weapon(Weapon.Type.SWORD),
+                new Weapon(Weapon.WeaponType.SWORD), new Weapon(Weapon.WeaponType.SWORD), new Weapon(Weapon.WeaponType.SWORD),
+                new Weapon(Weapon.WeaponType.SWORD),
                 // 5 thunders
-                new Spell(Spell.Type.THUNDER), new Spell(Spell.Type.THUNDER), new Spell(Spell.Type.THUNDER),
-                new Spell(Spell.Type.THUNDER), new Spell(Spell.Type.THUNDER),
+                new Spell(Spell.SpellType.THUNDER), new Spell(Spell.SpellType.THUNDER), new Spell(Spell.SpellType.THUNDER),
+                new Spell(Spell.SpellType.THUNDER), new Spell(Spell.SpellType.THUNDER),
                 // 2 fireballs
-                new Spell(Spell.Type.FIREBALL), new Spell(Spell.Type.FIREBALL),
+                new Spell(Spell.SpellType.FIREBALL), new Spell(Spell.SpellType.FIREBALL),
                 // 6 small potions
-                new Potion(Potion.Type.SMALL), new Potion(Potion.Type.SMALL), new Potion(Potion.Type.SMALL),
-                new Potion(Potion.Type.SMALL), new Potion(Potion.Type.SMALL), new Potion(Potion.Type.SMALL),
+                new Potion(Potion.PotionType.SMALL), new Potion(Potion.PotionType.SMALL), new Potion(Potion.PotionType.SMALL),
+                new Potion(Potion.PotionType.SMALL), new Potion(Potion.PotionType.SMALL), new Potion(Potion.PotionType.SMALL),
                 // 2 big potions
-                new Potion(Potion.Type.BIG), new Potion(Potion.Type.BIG),
+                new Potion(Potion.PotionType.BIG), new Potion(Potion.PotionType.BIG),
 
         };
 
@@ -245,9 +272,6 @@ public class Board {
     public Tile[] getTiles() {
         return this.board;
     }
-
-
-
 
 
 }

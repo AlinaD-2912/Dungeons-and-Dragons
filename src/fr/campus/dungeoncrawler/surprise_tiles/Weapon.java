@@ -2,12 +2,12 @@ package fr.campus.dungeoncrawler.surprise_tiles;
 
 public class Weapon extends OffensiveEquipment{
 
-    public enum Type {
+    public enum WeaponType {
         SWORD(5),    // adds +5 to attack
         MACE(3);     // adds +3 to attack
 
         private final int attackBoost;
-        Type(int attackBoost) {
+        WeaponType(int attackBoost) {
             this.attackBoost = attackBoost;
         }
 
@@ -16,19 +16,34 @@ public class Weapon extends OffensiveEquipment{
         }
     }
 
-    private final Weapon.Type type;
+    private  Weapon.WeaponType weaponType;
 
-    public Weapon(Weapon.Type type) {
-        this.type = type;
+    public Weapon(Weapon.WeaponType weaponType) {
+        this.weaponType = weaponType;
     }
 
+    public Weapon() {
+        // can initialize with default value or leave null
+    }
+
+
+
+    public Weapon.WeaponType getWeaponType() {
+        return weaponType;
+    }
+
+    public void setWeaponType(Weapon.WeaponType weaponType) {
+        this.weaponType = weaponType;
+    }
+
+
     public int getAttackBoost() {
-        return type.getAttackBoost();
+        return weaponType.getAttackBoost();
     }
 
 
     @Override
     public String toString() {
-        return type.name() + " Attack level : +" + getAttackBoost() ;
+        return weaponType.name() + " Attack level : +" + getAttackBoost() ;
     }
 }

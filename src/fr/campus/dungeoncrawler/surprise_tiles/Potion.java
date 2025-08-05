@@ -1,15 +1,16 @@
 package fr.campus.dungeoncrawler.surprise_tiles;
 
-import fr.campus.dungeoncrawler.game_engine.Tile;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Potion extends DefensiveEquipment {
 
-    public enum Type {
+    public enum PotionType {
         SMALL(2),    // Heals 2 HP
         BIG(5);     // Heals 5 HP
 
         private final int lifeBoost;
-        Type(int lifeBoost) {
+        PotionType(int lifeBoost) {
             this.lifeBoost = lifeBoost;
         }
 
@@ -18,18 +19,24 @@ public class Potion extends DefensiveEquipment {
         }
     }
 
-    private final Type type;
-
-    public Potion(Type type) {
-        this.type = type;
+    private final PotionType potionType;
+    @JsonCreator
+    public Potion(@JsonProperty("type") PotionType potionType) {
+        this.potionType = potionType;
     }
 
     public int getLifeBoost() {
-        return type.getLifeBoost();
+        return potionType.getLifeBoost();
     }
+
+    public PotionType getPotionType() {
+        return potionType;
+    }
+
 
     @Override
     public String toString() {
-        return type.name();
+
+        return potionType.name() + " potion, Life level boost +" +  getLifeBoost();
     }
 }

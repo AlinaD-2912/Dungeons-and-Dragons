@@ -1,13 +1,16 @@
 package fr.campus.dungeoncrawler.surprise_tiles;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Spell extends OffensiveEquipment
 {
-    public enum Type {
+    public enum SpellType {
         FIREBALL(7),    // adds +7 to attack
         THUNDER(2);     // adds +2 to attack
 
         private final int attackBoost;
-        Type(int attackBoost) {
+        SpellType(int attackBoost) {
             this.attackBoost = attackBoost;
         }
 
@@ -17,19 +20,24 @@ public class Spell extends OffensiveEquipment
 
     }
 
-    private final Spell.Type type;
+    private final Spell.SpellType spellType;
 
-    public Spell(Spell.Type type) {
-        this.type = type;
+    @JsonCreator
+    public Spell(@JsonProperty("spellType") SpellType spellType) {
+        this.spellType = spellType;
     }
 
     public int getAttackBoost() {
-        return type.getAttackBoost();
+        return spellType.getAttackBoost();
+    }
+
+    public SpellType getSpellType() {
+        return spellType;
     }
 
     @Override
     public String toString() {
-        return type.name();
+        return spellType.name() + " Attack level : +" + getAttackBoost() ;
     }
 
 }

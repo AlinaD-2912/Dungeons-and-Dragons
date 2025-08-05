@@ -26,6 +26,6 @@ public abstract class SurpriseTile extends Tile {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "This tile type is : " + this.type;
     }
 }

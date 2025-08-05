@@ -15,4 +15,9 @@ public class EmptyTile extends Tile {
     public boolean onTile(Character player) {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "This tile type is : " + this.type;
+    }
 }

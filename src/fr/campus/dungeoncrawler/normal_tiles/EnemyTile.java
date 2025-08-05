@@ -6,25 +6,40 @@ import fr.campus.dungeoncrawler.game_engine.FightMenu;
 import fr.campus.dungeoncrawler.game_engine.Tile;
 import fr.campus.dungeoncrawler.enemies.Enemy;
 import fr.campus.dungeoncrawler.intarfaces.CanAttack;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class EnemyTile extends Tile {
 
     private Enemy enemy;
+
+
+    @JsonIgnore
     private Board board;
+
+    public EnemyTile() {
+        // for Jackson
+    }
+
 
     public EnemyTile(Enemy enemy) {
         this.type = Type.ENEMY;
         this.enemy = enemy;
-        this.board = board;
     }
+
+//    public EnemyTile() {
+//        this.type = Type.ENEMY;
+//    }
 
     public void setBoard(Board board) {
         this.board = board;
     }
 
-
     public Enemy getEnemy() {
         return enemy;
+    }
+
+    public void setEnemy(Enemy enemy) {
+        this.enemy = enemy;
     }
 
     @Override
@@ -39,21 +54,19 @@ public class EnemyTile extends Tile {
                 case ENEMY_DEAD -> {
                     System.out.println("The " + enemy.getType() + " has been defeated and removed from the board.");
                     removeEnemy();
-                    return false; // Player survived, continue game
+                    return false;
                 }
                 case PLAYER_DEAD -> {
                     System.out.println("You have been defeated by the " + enemy.getType() + "...");
-                    return true; // Signal player dead - maybe end game or respawn
+                    return true;
                 }
                 case PLAYER_FLED -> {
                     System.out.println("You fled from the fight! Moving 2 steps back.");
-                    // Call your logic to move player 2 steps back here, e.g.:
                     board.movePlayerBack(2);
-
-                    return false; // Player fled, but alive
+                    return false;
                 }
                 default -> {
-                    return false; // Should not happen, but safe fallback
+                    return false;
                 }
             }
 
@@ -67,4 +80,18 @@ public class EnemyTile extends Tile {
         this.enemy = null;
         this.type = Type.EMPTY;
     }
+
+    @Override
+    public String toString() {
+        if (enemy == null) {
+            return "EnemyTile { EMPTY }";
+        }
+        return "EnemyTile { enemy: " + enemy.getType() + ", strength: " + enemy.getAttackLevel() + ", life: " + enemy.getLifeLevel() + " }";
+    }
+
+    @Override
+    public Type getType() {
+        return enemy == null ? Type.EMPTY : Type.ENEMY;
+    }
+
 }

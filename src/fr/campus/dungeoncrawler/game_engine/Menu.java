@@ -132,14 +132,36 @@ public class Menu {
                     }
                     //sends the created character to Game class and starts Game
                     case 3 -> {
+
                         Game game = new Game(player);
                         boolean playerSurvived = game.start();
 
+//                        DataBase db = new DataBase();
+//                        db.connect();
+//                        db.insertBoard(player.getName(), game.getBoard().getTiles());
+//                        db.close();
+
 
                         if (!playerSurvived) {
+                            game.saveGame(); // Save the game state after finishing
+
+                            DataBase db = new DataBase();
+                            db.connect();
+
+                            Tile[] savedTiles = db.getBoardByPlayer(player.getName());
+
+                            System.out.println("--- SAVED BOARD ---");
+                            for (Tile tile : savedTiles) {
+                                System.out.println(tile); // requires toString() in Tile subclasses
+                            }
+
+                            db.close();
+
                             boolean postGame = true;
+
                             while (postGame) {
-                                game.saveGame(); // Save the game state after finishing
+
+                                db.close();
                                 System.out.println("\n--- Game Over Menu ---");
                                 System.out.println("1. Restart with same character (reset stats)");
                                 System.out.println("2. Change character");

@@ -6,4 +6,6 @@ public class DefaultDefensiveEQP extends DefensiveEquipment{
         setName("None");
         setDefenseLevel(0);
     }
+
+
 }
