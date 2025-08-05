@@ -7,9 +7,9 @@ import javax.swing.*;
 
 // Main controller JFrame
 
-public class GameWindow extends JFrame {
+public class MainWindow extends JFrame {
 
-    public GameWindow() {
+    public MainWindow() {
         setTitle("Dungeons and Dragons");
         setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -9,7 +9,7 @@ import java.awt.*;
 // Displays player stats and "start" game
 public class GamePanel extends JPanel {
 
-    public GamePanel(GameWindow window, Character player) {
+    public GamePanel(MainWindow window, Character player) {
         setLayout(new BorderLayout());
 
         JLabel welcome = new JLabel("Welcome, " + player.getName() + "!", JLabel.CENTER);

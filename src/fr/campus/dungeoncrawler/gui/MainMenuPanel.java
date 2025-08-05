@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class MainMenuPanel extends JPanel {
 
-    public MainMenuPanel(GameWindow window) {
+    public MainMenuPanel(MainWindow window) {
         setLayout(new BorderLayout());
 
         // Title
@@ -26,6 +26,7 @@ public class MainMenuPanel extends JPanel {
         JButton createChar = new JButton("Create Character");
 
         JButton quit = new JButton("Quit");
+
         createChar.setBackground(Color.YELLOW);
         createChar.setForeground(Color.BLACK);
         createChar.setOpaque(true);
@@ -36,10 +37,28 @@ public class MainMenuPanel extends JPanel {
         quit.setOpaque(true);
         quit.setBorderPainted(false);
 
+        //hover effect for buttons
+        createChar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                createChar.setBackground(Color.YELLOW.darker());
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                createChar.setBackground(Color.YELLOW);
+            }
+        });
+
+        quit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                quit.setBackground(Color.RED.darker());
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                quit.setBackground(Color.RED);
+            }
+        });
+
 
         createChar.addActionListener(e -> {
-            Character player = new Warrior("Hero");
-            window.startGame(player);
+            window.startGame(createcharacter());
         });
 
         quit.addActionListener(e -> System.exit(0));
@@ -47,6 +66,7 @@ public class MainMenuPanel extends JPanel {
         buttons.add(createChar);
         buttons.add(quit);
         add(buttons, BorderLayout.SOUTH); // Changed from CENTER to SOUTH
+
     }
 
     private JLabel createImageLabel() {
@@ -78,4 +98,54 @@ public class MainMenuPanel extends JPanel {
             return new JLabel("Image not found", JLabel.CENTER);
         }
     }
+
+    private Character createcharacter(){
+        String[] options = {"Warrior", "Wizard"};
+        String selectedType = (String) JOptionPane.showInputDialog(
+                this,
+                "Choose your character type:",
+                "Character Type Selection",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0] // Default selection
+        );
+
+        // If user cancelled the dialog
+        if (selectedType == null) {
+            return null;
+        }
+
+        // Step 2: Enter character name
+        String characterName = JOptionPane.showInputDialog(
+                this,
+                "Enter your character's name:",
+                "Character Name",
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        // If user cancelled or entered empty name
+        if (characterName == null || characterName.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Character creation cancelled or invalid name entered.",
+                    "Creation Cancelled",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            return null;
+        }
+
+        // Create the character based on selection
+        Character player;
+        if (selectedType.equals("Warrior")) {
+            player = new Warrior(characterName.trim());
+        } else {
+            player = new fr.campus.dungeoncrawler.characters.Wizard(characterName.trim());
+        }
+        return player;
+    }
+
+
+
+
 }

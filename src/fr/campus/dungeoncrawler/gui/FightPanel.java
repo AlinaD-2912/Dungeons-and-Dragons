@@ -12,7 +12,7 @@ public class FightPanel extends JPanel {
     private final Character player;
     private final Enemy enemy;
 
-    public FightPanel(GameWindow window, Character player, Enemy enemy) {
+    public FightPanel(MainWindow window, Character player, Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
 
