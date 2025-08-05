@@ -24,8 +24,8 @@ public class MainWindow extends JFrame {
         revalidate();
     }
 
-    public void startGame(Character player) {
-        setContentPane(new GamePanel(this, player));
+    public void openSubMenu(Character player) {
+        setContentPane(new SubMenuPanel(this, player));
         revalidate();
     }
 

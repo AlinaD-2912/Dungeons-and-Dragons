@@ -2,6 +2,7 @@ package fr.campus.dungeoncrawler.gui;
 
 import fr.campus.dungeoncrawler.characters.Character;
 import fr.campus.dungeoncrawler.characters.Warrior;
+import fr.campus.dungeoncrawler.characters.Wizard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +59,7 @@ public class MainMenuPanel extends JPanel {
 
 
         createChar.addActionListener(e -> {
-            window.startGame(createcharacter());
+            window.openSubMenu(createcharacter());
         });
 
         quit.addActionListener(e -> System.exit(0));
@@ -140,7 +141,7 @@ public class MainMenuPanel extends JPanel {
         if (selectedType.equals("Warrior")) {
             player = new Warrior(characterName.trim());
         } else {
-            player = new fr.campus.dungeoncrawler.characters.Wizard(characterName.trim());
+            player = new Wizard(characterName.trim());
         }
         return player;
     }
