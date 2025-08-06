@@ -79,7 +79,7 @@ public class SubMenuPanel extends JPanel {
         startGame.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Starting the game with " + player.getName() + "!");
             Board board = new Board(player);
-            window.startGame(player, board);
+            window.startGame(player);
         });
 
         goBack.addActionListener(e -> {

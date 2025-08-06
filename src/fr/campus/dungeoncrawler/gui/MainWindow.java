@@ -30,10 +30,12 @@ public class MainWindow extends JFrame {
         revalidate();
     }
 
-    public void startGame(Character player, Board board) {
-        GamePanel gamePanel = new GamePanel(this, player, board);
+    public void startGame(Character player) {
+        Board board = new Board(player); // created here!
+        GamePanel gamePanel = new GamePanel(this, player, board); // pass both
         setContentPane(gamePanel);
         revalidate();
+        repaint();
     }
 
 //    public void showFightPanel(Character player, Enemy enemy) {
