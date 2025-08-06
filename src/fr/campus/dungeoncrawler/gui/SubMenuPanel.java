@@ -2,6 +2,7 @@ package fr.campus.dungeoncrawler.gui;
 
 import fr.campus.dungeoncrawler.characters.Character;
 import fr.campus.dungeoncrawler.characters.Warrior;
+import fr.campus.dungeoncrawler.game_engine.Board;
 import fr.campus.dungeoncrawler.characters.Wizard;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.net.URL;
 public class SubMenuPanel extends JPanel {
     private JPanel centerPanel; // Panel to hold dynamic content (character info)
     private Character player;
+    private Board board;
 
     public SubMenuPanel(MainWindow window, Character player) {
         this.player = player;
@@ -54,13 +56,30 @@ public class SubMenuPanel extends JPanel {
         goBack.setBorderPainted(false);
 
         // Add action listeners
-        showCharacter.addActionListener(e -> showCharacterInfo());
+        showCharacter.addActionListener(e -> {
+            // Creates text area
+            JTextArea info = new JTextArea();
+            info.setEditable(false);
+            info.setFont(new Font("Monospaced", Font.PLAIN, 14));
+            info.setBorder(BorderFactory.createTitledBorder("Character Information"));
+            info.setText("Name: " + player.getName() + "\n" +
+                    "Type: " + player.getType() + "\n" +
+                    "Attack: " + player.getAttackLevel() + "\n" +
+                    "Life: " + player.getLifeLevel());
+
+            JScrollPane scrollPane = new JScrollPane(info);
+            centerPanel.add(scrollPane, BorderLayout.CENTER); // Text in CENTER
+
+            centerPanel.revalidate();
+            centerPanel.repaint();
+        });
 
         modifyCharacter.addActionListener(e -> modifyCharacterName());
 
         startGame.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Starting the game with " + player.getName() + "!");
-            // Here you would call window.startActualGame(player) or similar
+            Board board = new Board(player);
+            window.startGame(player, board);
         });
 
         goBack.addActionListener(e -> {
@@ -74,6 +93,8 @@ public class SubMenuPanel extends JPanel {
         buttons.add(goBack);
 
         add(buttons, BorderLayout.SOUTH);
+
+        showCharacterInfo();
     }
 
     private void showCharacterInfo() {
@@ -97,21 +118,7 @@ public class SubMenuPanel extends JPanel {
             centerPanel.add(bgLabel, BorderLayout.NORTH);
         }
 
-        // Create text area
-        JTextArea info = new JTextArea();
-        info.setEditable(false);
-        info.setFont(new Font("Monospaced", Font.PLAIN, 14));
-        info.setBorder(BorderFactory.createTitledBorder("Character Information"));
-        info.setText("Name: " + player.getName() + "\n" +
-                "Type: " + player.getType() + "\n" +
-                "Attack: " + player.getAttackLevel() + "\n" +
-                "Life: " + player.getLifeLevel());
 
-        JScrollPane scrollPane = new JScrollPane(info);
-        centerPanel.add(scrollPane, BorderLayout.CENTER); // Text in CENTER
-
-        centerPanel.revalidate();
-        centerPanel.repaint();
     }
 
     private void modifyCharacterName() {

@@ -2,6 +2,7 @@ package fr.campus.dungeoncrawler.gui;
 
 import fr.campus.dungeoncrawler.characters.Character;   // ensure this import
 import fr.campus.dungeoncrawler.enemies.Enemy;
+import fr.campus.dungeoncrawler.game_engine.Board;
 
 import javax.swing.*;
 
@@ -29,8 +30,14 @@ public class MainWindow extends JFrame {
         revalidate();
     }
 
-    public void showFightPanel(Character player, Enemy enemy) {
-        setContentPane(new FightPanel(this, player, enemy));
+    public void startGame(Character player, Board board) {
+        GamePanel gamePanel = new GamePanel(this, player, board);
+        setContentPane(gamePanel);
         revalidate();
     }
+
+//    public void showFightPanel(Character player, Enemy enemy) {
+//        setContentPane(new FightPanel(this, player, enemy));
+//        revalidate();
+//    }
 }
