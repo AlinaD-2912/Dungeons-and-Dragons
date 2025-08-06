@@ -31,7 +31,7 @@ public class Board {
      * Board creates -> enemies and places them on -> Board placeEnemies()
      */
 
-    public static final int BOARD_SIZE = 100;
+    public static final int BOARD_SIZE = 96;
     //Create an array that can hold 64 references to Tile objects
     private final Tile[] board = new Tile[BOARD_SIZE];
     private int playerPosition = 0;

@@ -65,6 +65,11 @@ public class GamePanel extends JPanel {
         bottomPanel.add(new JScrollPane(logArea), BorderLayout.CENTER);
 
         add(bottomPanel, BorderLayout.SOUTH);
+
+        boardGrid = new JPanel(new GridLayout(0, GRID_WIDTH));
+        boardGrid.setBackground(Color.WHITE);  // Or any Color you want
+        drawBoard();
+        add(boardGrid, BorderLayout.CENTER);
     }
 
     private void loadIcons(int tilePixelSize) {
@@ -91,6 +96,8 @@ public class GamePanel extends JPanel {
         boardGrid.removeAll();
         Tile[] tiles = board.getTiles();
         int playerPos = board.getPlayerPosition();
+
+
 
         for (int i = 0; i < tiles.length; i++) {
             JLabel tileLabel = new JLabel();
