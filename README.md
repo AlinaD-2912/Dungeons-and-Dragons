@@ -51,7 +51,7 @@ CREATE TABLE characters (
 javac Main.java
 java Main
 ```
-## Exemple de gameplay
+## Exemple de gameplay en console
    
 <pre> ``` 
  --- Main Menu --- 
@@ -112,3 +112,14 @@ java Main
  1. Attack 
  2. Flee Choose: 
  ``` </pre>
+ 
+##  Exemple de gameplay en interface graphique
+<img width="791" height="637" alt="image" src="https://github.com/user-attachments/assets/21bb2eb8-4152-4494-8e15-6d3d137ba4f4" />
+<img width="791" height="637" alt="image" src="https://github.com/user-attachments/assets/ebccd954-3e46-499f-97e4-41f239e65060" />
+<img width="791" height="637" alt="image" src="https://github.com/user-attachments/assets/0fc80003-cfd3-4ffb-a88f-62d630253d9d" />
+<img width="791" height="637" alt="image" src="https://github.com/user-attachments/assets/e918b49a-46ae-4994-9f8a-9ae037fa2c56" />
+<img width="791" height="714" alt="image" src="https://github.com/user-attachments/assets/ffb0331f-25b4-4a59-9259-6aa20f6f9a18" />
+
+
+
+
