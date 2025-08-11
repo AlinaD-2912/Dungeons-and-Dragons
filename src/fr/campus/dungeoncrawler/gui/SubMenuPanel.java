@@ -114,7 +114,7 @@ public class SubMenuPanel extends JPanel {
             Image scaledImg = originalImg.getScaledInstance(600, 300, Image.SCALE_SMOOTH);
 
             JLabel bgLabel = new JLabel(new ImageIcon(scaledImg));
-            bgLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // Optional border
+            bgLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             centerPanel.add(bgLabel, BorderLayout.NORTH);
         }
 

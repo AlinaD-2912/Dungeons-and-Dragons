@@ -19,9 +19,6 @@ public class FightMenu {
     }
 
 
-
-
-
     public FightResult startFight (Character player, Enemy enemy) {
 
         /**

@@ -5,6 +5,7 @@ import fr.campus.dungeoncrawler.enemies.Enemy;
 import fr.campus.dungeoncrawler.game_engine.Board;
 
 import javax.swing.*;
+import java.util.function.Consumer;
 
 // Main controller JFrame
 
@@ -37,6 +38,14 @@ public class MainWindow extends JFrame {
         revalidate();
         repaint();
     }
+
+    public void showFightPanel() {
+        setContentPane(new FightPanel());
+        revalidate();
+        repaint();
+    }
+
+
 
 //    public void showFightPanel(Character player, Enemy enemy) {
 //        setContentPane(new FightPanel(this, player, enemy));

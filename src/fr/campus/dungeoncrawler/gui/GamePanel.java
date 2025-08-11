@@ -56,7 +56,7 @@ public class GamePanel extends JPanel {
         // Bottom panel (dice + log)
         JPanel bottomPanel = new JPanel(new BorderLayout());
 
-        rollDiceButton = new JButton("🎲 Roll Dice");
+        rollDiceButton = new JButton("Roll Dice");
         rollDiceButton.addActionListener(e -> handlePlayerMove());
         bottomPanel.add(rollDiceButton, BorderLayout.WEST);
 
@@ -104,7 +104,7 @@ public class GamePanel extends JPanel {
             tileLabel.setPreferredSize(new Dimension(TILE_SIZE, TILE_SIZE));
             tileLabel.setHorizontalAlignment(JLabel.CENTER);
             tileLabel.setVerticalAlignment(JLabel.CENTER);
-            tileLabel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY)); // ✅ Add this
+            tileLabel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
 
             ImageIcon iconToSet = null;
 
@@ -146,14 +146,14 @@ public class GamePanel extends JPanel {
 
 
     private void handlePlayerMove() {
-        appendLog("🎲 Rolling the dice...");
+        appendLog("Rolling the dice...");
         boolean gameOver = board.movePlayer();
 
         if (gameOver) {
-            appendLog("🎉 Game Over!");
+            appendLog("Game Over!");
             rollDiceButton.setEnabled(false);
         } else {
-            appendLog("📍 Moved to tile " + board.getPlayerPosition());
+            appendLog("Moved to tile " + board.getPlayerPosition());
         }
 
         updateStats();
