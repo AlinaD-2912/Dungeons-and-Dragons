@@ -11,11 +11,7 @@ Reproduire l’esprit du jeu D&D dans un environnement Java console, avec :
   - Des interactions en temps réel via clavier
 
   - Une sauvegarde persistante des personnages créés dans une base de données MySQL
-## Pages du site
-- **Catalogue** : Affiche une liste dynamique d’objets produits (ex. téléphones, laptops). Chaque produit a un nom, une description, un prix et une quantité. Les objets sont manipulés directement en PHP.
-- **Contact** : Formulaire permettant aux visiteurs de contacter l’entreprise. Les données saisies sont enregistrées dans un fichier texte (messages.txt), illustrant la gestion de formulaires en PHP.
-- **Panier** : Panier simple utilisant les sessions PHP. L'utilisateur peut ajouter/modifier des produits au panier à partir du catalogue.
-  
+
 
 ## Technologies utilisées
 - Java 17+
