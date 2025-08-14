@@ -53,6 +53,15 @@ public class FightPanel extends JDialog {
         pack();
         setResizable(false);
         setLocationRelativeTo(null);
+
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                JOptionPane.showMessageDialog(FightPanel.this, "You cannot close the fight! Use Attack or Flee.");
+            }
+        });
     }
 
     /**

@@ -1,6 +1,4 @@
 package fr.campus.dungeoncrawler;
-
-import fr.campus.dungeoncrawler.game_engine.Menu;
 import fr.campus.dungeoncrawler.gui.MainWindow;
 
 import javax.swing.*;

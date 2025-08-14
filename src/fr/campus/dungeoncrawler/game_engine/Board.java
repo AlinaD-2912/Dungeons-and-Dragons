@@ -86,33 +86,33 @@ public class Board {
     }
 
     public void printBoard() {
-        System.out.println("\n=== BOARD OVERVIEW ===");
-        for (int i = 0; i < board.length; i++) {
-            Tile tile = board[i];
-            String display;
-
-            if (tile instanceof EmptyTile) {
-                display = "[   ]";
-            } else if (tile instanceof EnemyTile) {
-                display = "[ E ]";
-            } else if (tile instanceof Potion) {
-                display = "[ P ]";
-            } else if (tile instanceof Spell) {
-                display = "[ S ]";
-            } else if (tile instanceof Weapon) {
-                display = "[ W ]";
-            } else {
-                display = "[ ? ]"; // Unknown or undefined tile
-            }
-
-            System.out.print(display);
-
-            // Optional: Line break every 8 tiles (or any size you want)
-            if ((i + 1) % 8 == 0) {
-                System.out.println();
-            }
-        }
-        System.out.println();
+//        System.out.println("\n=== BOARD OVERVIEW ===");
+//        for (int i = 0; i < board.length; i++) {
+//            Tile tile = board[i];
+//            String display;
+//
+//            if (tile instanceof EmptyTile) {
+//                display = "[   ]";
+//            } else if (tile instanceof EnemyTile) {
+//                display = "[ E ]";
+//            } else if (tile instanceof Potion) {
+//                display = "[ P ]";
+//            } else if (tile instanceof Spell) {
+//                display = "[ S ]";
+//            } else if (tile instanceof Weapon) {
+//                display = "[ W ]";
+//            } else {
+//                display = "[ ? ]"; // Unknown or undefined tile
+//            }
+//
+//            System.out.print(display);
+//
+//            // Optional: Line break every 8 tiles (or any size you want)
+//            if ((i + 1) % 8 == 0) {
+//                System.out.println();
+//            }
+//        }
+//        System.out.println();
     }
 
 
